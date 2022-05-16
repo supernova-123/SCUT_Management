@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VisitorInformation</class>
+ <widget class="QWidget" name="VisitorInformation">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>323</width>
+    <height>271</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>VisitorInformation</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/myinformation.png</normaloff>images/myinformation.png</iconset>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_3">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="calssLabel">
+         <property name="text">
+          <string>我的身份：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="nameLabel">
+         <property name="text">
+          <string>姓名：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="usernameLabel">
+         <property name="text">
+          <string>用户名：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="idLabel">
+         <property name="text">
+          <string>身份证号：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="ageLabel">
+         <property name="text">
+          <string>年龄：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="buildingLabel">
+         <property name="text">
+          <string>楼栋/所在单位：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="roomLabel">
+         <property name="text">
+          <string>房号/办公室：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="addressLabel">
+         <property name="text">
+          <string>出发地：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="phoneLabel">
+         <property name="text">
+          <string>联系方式：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="starttimeLabel">
+         <property name="text">
+          <string>留校起始时间：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="fintimeLabel">
+         <property name="text">
+          <string>离校时间：</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="classText">
+         <property name="text">
+          <string>identity</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="nameText">
+         <property name="text">
+          <string>name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="usernameText">
+         <property name="text">
+          <string>username</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="idText">
+         <property name="text">
+          <string>id</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="ageText">
+         <property name="text">
+          <string>age</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="buildingText">
+         <property name="text">
+          <string>building</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="roomText">
+         <property name="text">
+          <string>room</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="addressText">
+         <property name="text">
+          <string>address</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="phoneText">
+         <property name="text">
+          <string>phonenumber</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="starttimeText">
+         <property name="text">
+          <string>starttime</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="fintimeText">
+         <property name="text">
+          <string>fintime</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="changeusername">
+       <property name="text">
+        <string>修改用户名</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="changepassword">
+       <property name="text">
+        <string>修改密码</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="flushBtn">
+       <property name="text">
+        <string>刷新</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>注意：修改其他信息请向管理员申请</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

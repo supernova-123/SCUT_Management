@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LoginDialog</class>
+ <widget class="QDialog" name="LoginDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>245</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>LoginDialog</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/登录.png</normaloff>images/登录.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+        </property>
+        <property name="text">
+         <string>您的身份</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLineEdit" name="Username">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="Password">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="UsernameLabel">
+          <property name="styleSheet">
+           <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+          </property>
+          <property name="text">
+           <string>用户名：</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="PasswordLabel">
+          <property name="styleSheet">
+           <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+          </property>
+          <property name="text">
+           <string>密码：</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="Login">
+        <property name="styleSheet">
+         <string notr="true">font: 10pt &quot;等线&quot;;</string>
+        </property>
+        <property name="text">
+         <string>登录</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1" colspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QRadioButton" name="checkAdmin">
+          <property name="styleSheet">
+           <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+          </property>
+          <property name="text">
+           <string>管理员</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="checkStu">
+          <property name="styleSheet">
+           <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+          </property>
+          <property name="text">
+           <string>学生</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="checkTea">
+          <property name="text">
+           <string>教职工</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="checkVis">
+          <property name="styleSheet">
+           <string notr="true">font: 75 9pt &quot;等线&quot;;</string>
+          </property>
+          <property name="text">
+           <string>访客</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="checkNone">
+          <property name="text">
+           <string>未注册访客</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="Exit">
+        <property name="styleSheet">
+         <string notr="true">font: 75 10pt &quot;等线&quot;;</string>
+        </property>
+        <property name="text">
+         <string>退出</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="Welcome">
+        <property name="styleSheet">
+         <string notr="true">font: 11pt &quot;黑体&quot;;</string>
+        </property>
+        <property name="text">
+         <string>           欢迎来到SCUT留校人员管理系统！</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
