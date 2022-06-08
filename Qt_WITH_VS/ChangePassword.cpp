@@ -1,7 +1,6 @@
 #include "ChangePassword.h"
 extern int Pos;
 extern int type;
-//extern ADMIN_User AdminUser[SIZE];
 extern vector<ADMIN_User>AdminUser;
 extern TEACHER_User TeacherUser[SIZE];
 extern STUDENT_User StudentUser[SIZE];
@@ -30,6 +29,11 @@ void ChangePassword::on_OK_clicked()
 	if (type == 2) us = &StudentUser[Pos];
 	else if (type == 3)us = &TeacherUser[Pos];
 	else us = &VisitorUser[Pos];
+	if (oldPwd.isEmpty() || newPwd.isEmpty() || confirmNewPwd.isEmpty())
+	{
+		QMessageBox::warning(this, tr("错误"), tr("密码不能为空！"), QMessageBox::Ok);
+		return;
+	}
 	if (oldPwd != us->getPassword())
 	{
 		QMessageBox::warning(this, tr("错误"), tr("输入的旧密码与实际密码不一致！"), QMessageBox::Ok);
