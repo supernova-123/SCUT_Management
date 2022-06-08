@@ -55,7 +55,7 @@
       <item>
        <widget class="QPushButton" name="addAdmin">
         <property name="text">
-         <string>添加/删除管理员</string>
+         <string>查看管理员名单</string>
         </property>
        </widget>
       </item>
@@ -89,10 +89,10 @@
       <item>
        <widget class="QLabel" name="Data">
         <property name="text">
-         <string>123</string>
+         <string>NULL</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
         </property>
        </widget>
       </item>

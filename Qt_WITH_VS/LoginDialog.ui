@@ -158,6 +158,9 @@
         <property name="text">
          <string>           欢迎来到SCUT留校人员管理系统！</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+        </property>
        </widget>
       </item>
      </layout>

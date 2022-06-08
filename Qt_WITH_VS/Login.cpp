@@ -1,12 +1,18 @@
 //Login.cpp
 #include"Login.h"
 using namespace std;
-//管理人员保存
-//ADMIN_User AdminUser[SIZE];
 STUDENT_User StudentUser[SIZE];
 VISITOR_User VisitorUser[SIZE];
 TEACHER_User TeacherUser[SIZE];
 vector<ADMIN_User>AdminUser(SIZE);//此处设置为vector类型的原因是方便后续删除管理员，数组类型的插入和删除效率是很低的
+//记录每个类型人员的人数
+int teacount;
+int stucount;
+int viscount;
+int adscount;
+//超级管理员：即群主，拥有添加、删除管理员的权利
+int superAdmin;
+//获取当前人员在数组的位置
 extern int Pos;
 //对基类方法的瞎定义
 
@@ -19,6 +25,10 @@ bool User::UserIsExisted(const QString& value)
 	return 1;
 }
 int User::save()
+{
+	return 1;
+}
+bool User::IdIsExisted(const QString& value)
 {
 	return 1;
 }
@@ -48,7 +58,6 @@ int ADMIN_User::read()
 {
 	ifstream ifile;
 	ifile.open(adminList, ios::in);
-	int adscount = 0;
 	for (int i = 0; !ifile.eof(); i++)
 	{
 		string us, ps;
@@ -63,25 +72,16 @@ int ADMIN_User::read()
 	ifile.close();
 	return adscount;
 }
-bool ADMIN_User::UserIsExisted(const QString& value)
+int ADMIN_User::UserIsExisted(const QString& value)//遍历查找
 {
-	ifstream ifile;
-	ifile.open(adminList, ios::in);
-	for (int i = 0; !ifile.eof(); ++i)
+	for (int i = 0; i < SIZE && !AdminUser[i].getUsername().isEmpty(); ++i)
 	{
-		string us, ps;
-		us = AdminUser[i].getUsername().toStdString();
-		ps = AdminUser[i].getPassword().toStdString();
-		ifile >> us;
-		ifile >> ps;
-		if (AdminUser[i].getUsername() == value)
+		if ( AdminUser[i].getUsername() == value)
 		{
-			ifile.close();
-			return true;
+			return (i+1);//返回下标+1
 		}
 	}
-	ifile.close();
-	return false;
+	return 0;
 }
 
 //对学生
@@ -115,7 +115,7 @@ int STUDENT_User::read()
 	QFile* file = new QFile(studentList);
 	file->open(QIODevice::ReadOnly);
 	QDataStream dataStr(file);
-	int stucount = 0;
+	stucount = 0;
 	QString qid, qname, qage, qusername, qroom, qbuilding, qpassword, qphone, qstart_time, qstay_reason, qaddress, qclass, qfin_time, qcode;
 	while (!dataStr.atEnd())//把文件里的学生信息写到里面
 	{
@@ -143,14 +143,24 @@ bool STUDENT_User::UserIsExisted(const QString& value)
 {
 	for (int i = 0; StudentUser[i].getUsername() != ""; ++i)
 	{
-		if (StudentUser[i].getUsername() == value)
+		if (StudentUser[i].getUsername() == value && i != Pos)
 		{
 			return true;
 		}
 	}
 	return false;
 }
-
+bool STUDENT_User::IdIsExisted(const QString& value)
+{
+	for (int i = 0; !StudentUser[i].getId().isEmpty(); ++i)
+	{
+		if (StudentUser[i].getId() == value)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 int TEACHER_User::save()
 {
 	QFile* tempFile;
@@ -180,7 +190,7 @@ int TEACHER_User::read()
 	QFile* file = new QFile(teacherList);
 	file->open(QIODevice::ReadOnly);
 	QDataStream dataStr(file);
-	int teacount = 0;
+	teacount = 0;
 	QString qid, qname, qage, qusername, qroom, qbuilding, qpassword, qphone, qstart_time, qstay_reason, qaddress, qclass, qfin_time, qcode;
 	while (!dataStr.atEnd())//把文件里的访客信息写到里面
 	{
@@ -208,7 +218,18 @@ bool TEACHER_User::UserIsExisted(const QString& value)
 {
 	for (int i = 0; TeacherUser[i].getUsername() != ""; ++i)
 	{
-		if (TeacherUser[i].getUsername() == value)
+		if (TeacherUser[i].getUsername() == value && i != Pos)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool TEACHER_User::IdIsExisted(const QString& value)
+{
+	for (int i = 0; !TeacherUser[i].getId().isEmpty(); ++i)
+	{
+		if (TeacherUser[i].getId() == value)
 		{
 			return true;
 		}
@@ -245,8 +266,8 @@ int VISITOR_User::read()
 	QFile* file = new QFile(visitorList);
 	file->open(QIODevice::ReadOnly);
 	QDataStream dataStr(file);
-	int viscount = 0;
 	QString qid, qname, qage, qusername, qroom, qbuilding, qpassword, qphone, qstart_time, qstay_reason, qaddress, qclass, qfin_time, qcode;
+	viscount = 0;
 	while (!dataStr.atEnd())//把文件里的访客信息写到里面
 	{
 		dataStr >> qclass >> qname >> qid >> qage >> qbuilding >> qroom >> qaddress >> qphone >> qstart_time >> qfin_time >> qstay_reason >> qcode >> qusername >> qpassword;
@@ -273,15 +294,24 @@ bool VISITOR_User::UserIsExisted(const QString& value)
 {
 	for (int i = 0; VisitorUser[i].getUsername() != ""; ++i)
 	{
-		if (VisitorUser[i].getUsername() == value)
+		if (VisitorUser[i].getUsername() == value && i != Pos)
 		{
 			return true;
 		}
 	}
 	return false;
 }
-
-
+bool VISITOR_User::IdIsExisted(const QString& value)
+{
+	for (int i = 0; !VisitorUser[i].getId().isEmpty(); ++i)
+	{
+		if (VisitorUser[i].getId() == value)
+		{
+			return true;
+		}
+	}
+	return false;
+}
 QString User::getName()const
 {
 	return Name;

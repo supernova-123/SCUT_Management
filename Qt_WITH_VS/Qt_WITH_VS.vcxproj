@@ -88,8 +88,10 @@
   <ItemGroup>
     <ClCompile Include="AddAdmin.cpp" />
     <ClCompile Include="AdminInformation.cpp" />
+    <ClCompile Include="AdminTable.cpp" />
     <ClCompile Include="AdminWidgets.cpp" />
     <ClCompile Include="ChangeAdminInformation.cpp" />
+    <ClCompile Include="ChangeOtherAdmin.cpp" />
     <ClCompile Include="ChangePassword.cpp" />
     <ClCompile Include="ChangeUsername.cpp" />
     <ClCompile Include="EditMessBox.cpp" />
@@ -106,10 +108,16 @@
     <QtUic Include="AdminInformation.ui">
       <QtUicDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">GeneratedFiles\</QtUicDir>
     </QtUic>
+    <QtUic Include="AdminTable.ui">
+      <QtUicDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">GeneratedFiles\</QtUicDir>
+    </QtUic>
     <QtUic Include="AdminWidgets.ui">
       <QtUicDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">GeneratedFiles\</QtUicDir>
     </QtUic>
     <QtUic Include="ChangeAdminInformation.ui">
+      <QtUicDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">GeneratedFiles\</QtUicDir>
+    </QtUic>
+    <QtUic Include="ChangeOtherAdmin.ui">
       <QtUicDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">GeneratedFiles\</QtUicDir>
     </QtUic>
     <QtUic Include="ChangePassword.ui">
@@ -170,6 +178,8 @@
     <QtMoc Include="ChangeUsername.h" />
     <QtMoc Include="ChangePassword.h" />
     <QtMoc Include="ChangeAdminInformation.h" />
+    <QtMoc Include="AdminTable.h" />
+    <QtMoc Include="ChangeOtherAdmin.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

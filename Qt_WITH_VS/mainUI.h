@@ -10,6 +10,7 @@
 #include"TeacherInformation.h"
 #include"VisitorInformation.h"
 #include"AddAdmin.h"
+#include"AdminTable.h"
 //#include"NetworkDetect.h"
 class mainUI : public QMainWindow
 {

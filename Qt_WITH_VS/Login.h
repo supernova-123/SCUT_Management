@@ -20,9 +20,7 @@ using namespace std;
 #if defined(_MSC_VER) && (_MSC_VER >= 1600)    
 # pragma execution_character_set("utf-8")    
 #endif
-#define SIZE 500//最大用户容量
-//int adscount = 0;//用作储存当前已注册管理用员数
-//int stucount = 0;//用作储存当前已注册普通用户数
+#define SIZE 505//最大用户容量
 class User
 {
 private:
@@ -40,7 +38,7 @@ private:
 	QString stay_reason;//留校原因或来访原因
 	QString Class;//身份
 	QString code;//健康码
-public:
+public://接口函数原型
 	QString getClass()const;
 	void setClass(const QString& value);
 
@@ -86,6 +84,7 @@ public:
 	virtual int save();//保存，相当于把数组里的内容导入文件
 	virtual int read();//读取，相当于把文件的内容存入数组
 	virtual bool UserIsExisted(const QString& value);//判断用户是否存在
+	virtual bool IdIsExisted(const QString& value);//判断证件号是否存在
 };
 //管理员独立出来
 class ADMIN_User
@@ -101,7 +100,7 @@ public:
 	void save();//用来往文件末尾添加数据
 	void total_save();//和save的区别是，重新往文件再如数据（先全部删除）
 	int read();
-	bool UserIsExisted(const QString& value);
+	int UserIsExisted(const QString& value);
 };
 //学生类是用户类的基类
 class STUDENT_User :public User
@@ -110,6 +109,8 @@ public:
 	virtual int save();
 	virtual int read();
 	virtual bool UserIsExisted(const QString& value);
+	virtual bool IdIsExisted(const QString& value);//判断证件号是否存在
+
 };
 //访客类是用户类的基类
 class VISITOR_User :public User
@@ -118,6 +119,7 @@ public:
 	virtual int save();
 	virtual int read();
 	virtual bool UserIsExisted(const QString& value);
+	virtual bool IdIsExisted(const QString& value);//判断证件号是否存在
 
 };
 //教职工类是用户类的基类
@@ -127,6 +129,8 @@ public:
 	virtual int save();
 	virtual int read();
 	virtual bool UserIsExisted(const QString& value);
+	virtual bool IdIsExisted(const QString& value);//判断证件号是否存在
+
 };
 class Login : public QObject
 {

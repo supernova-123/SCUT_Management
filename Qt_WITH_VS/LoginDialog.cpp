@@ -11,19 +11,19 @@
 #include"Login.h"
 int type;//=1则为管理员 =2则为学生 =3则为教职工 =4则为访客 =5则为未注册的访客
 int Pos;//表示在数组中的位置
-//extern ADMIN_User AdminUser[SIZE];
 extern vector<ADMIN_User>AdminUser;
 extern STUDENT_User StudentUser[SIZE];
 extern VISITOR_User VisitorUser[SIZE];
 extern TEACHER_User TeacherUser[SIZE];
-int stucount; int vscount; int adscount; int teacount;
+extern int stucount; extern int viscount; extern int adscount; extern int teacount;
+extern int superAdmin;
 LoginDialog::LoginDialog(QWidget* parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
 	//在初始页面构造的时候录入人员
 	stucount = StudentUser[0].read();
-	vscount = VisitorUser[0].read();
+	viscount = VisitorUser[0].read();
 	adscount = AdminUser[0].read();
 	teacount = TeacherUser[0].read();
 	int a = 0;
@@ -47,6 +47,8 @@ void LoginDialog::on_Login_clicked()
 			if (ui.Username->text() == (AdminUser[i].getUsername()) &&
 				ui.Password->text() == (AdminUser[i].getPassword()))
 			{
+				//判断是不是超级管理员
+				if (ui.Username->text() == AdminUser[0].getUsername()) superAdmin = -1;
 				success = 1;
 				type = 1;
 				Pos = i;
@@ -106,7 +108,7 @@ void LoginDialog::on_Login_clicked()
 	else if (ui.checkVis->isChecked())
 	{
 		bool success = 0;
-		for (int i = 0; i < vscount; ++i)
+		for (int i = 0; i < viscount; ++i)
 		{
 			if (ui.Username->text() == (VisitorUser[i].getUsername()) &&
 				ui.Password->text() == (VisitorUser[i].getPassword()))

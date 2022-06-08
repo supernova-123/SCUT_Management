@@ -20,6 +20,7 @@ extern STUDENT_User StudentUser[SIZE];
 extern VISITOR_User VisitorUser[SIZE];
 extern TEACHER_User TeacherUser[SIZE];
 extern vector<ADMIN_User>AdminUser;
+extern int superAdmin;
 extern int type;//=1则为管理员 =2则为学生 =3则为教职工 =4则为访客 =5则为未注册的访客
 extern int Pos;
 int checkList;//表示点击了哪个按钮:1表示学生列表 2表示教职工列表 3表示访客列表 4表示我的信息 5表示添加管理员 6表示退出
@@ -28,7 +29,7 @@ mainUI::mainUI(QWidget* parent)
 {
     ui.setupUi(this);
     //设置窗口名
-    setWindowTitle("主界面");
+    setWindowTitle("Designed by ZhuJinhong&ChaiHao version2.09(Beta)");
     //在构造函数设计一个显示时间的装置
     QTimer* timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerUpdate()));
@@ -36,15 +37,16 @@ mainUI::mainUI(QWidget* parent)
     QDateTime time = QDateTime::currentDateTime();
     QString str = time.toString("yyyy-MM-dd hh:mm:ss dddd");
     QLabel* permanent = new QLabel;
-    permanent->setFrameStyle(QFrame::Box | QFrame::Sunken);
-    permanent->setText(
-        tr("本次登录的时间为 %1").arg(str));
+    permanent->setFrameStyle(QFrame::Box | QFrame::Plain);
+    permanent->setText(tr("本次登录的时间为 %1").arg(str));
     permanent->setTextFormat(Qt::RichText);
     permanent->setOpenExternalLinks(true);
+
     //放到状态栏里
     ui.statusBar->addPermanentWidget(permanent);
+
     //设置权限
-    if (type != 1)
+    if (superAdmin != -1)
     {
         ui.addAdmin->setEnabled(false);
     }
@@ -100,16 +102,14 @@ bool mainUI::Ping(QString strPingIP)
 
     qDebug() << p_stdout;
     bool bPingSuccess = false;
-    //
+
     if (p_stdout.contains("TTL=")) //通过特殊字符串进行判断ping是否成功 有TTL字样则说明网络连接成功 反之则没有
     {
-        //printf("Ping true\n");
         bPingSuccess = true;
     }
     //失败时 p_stdout为“Ping 请求找不到主机 www.baidu.com。请检查该名称，然后重试。”
     else
     {
-        //printf("Ping false\n");
         bPingSuccess = false;
     }
     return bPingSuccess;
@@ -176,6 +176,6 @@ void mainUI::on_visitor_clicked()
 void mainUI::on_addAdmin_clicked()
 {
     checkList = 5;
-    AddAdmin* add = new AddAdmin;
+    AdminTable* add = new AdminTable;
     add->show();
 }

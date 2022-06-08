@@ -79,6 +79,12 @@
     <ClCompile Include="ChangeAdminInformation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AdminTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeOtherAdmin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="path.h">
@@ -120,6 +126,12 @@
     <QtMoc Include="ChangeAdminInformation.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="AdminTable.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ChangeOtherAdmin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="LoginDialog.ui">
@@ -153,6 +165,12 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ChangeAdminInformation.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AdminTable.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ChangeOtherAdmin.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
