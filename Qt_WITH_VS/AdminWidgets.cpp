@@ -5,7 +5,6 @@
 #include<qstatusbar.h>
 #include<qmessagebox.h>
 #include<qmainwindow.h>
-//extern ADMIN_User AdminUser[SIZE];
 extern vector<ADMIN_User>AdminUser;
 extern STUDENT_User StudentUser[SIZE];
 extern VISITOR_User VisitorUser[SIZE];
@@ -13,13 +12,19 @@ extern TEACHER_User TeacherUser[SIZE];
 extern int type;//=1则为管理员 =2则为学生 =3则为教职工 =4则为访客 =5则为未注册的访客
 extern int Pos;
 extern int checkList;
+QString currentDate;
+int pp;
 AdminWidgets::AdminWidgets()
 {
+	pp = 1;
 	ui.setupUi(this);
 	/*
 	 * 主界面利用 QHBoxLayout 布局为两个区域，左边区域用 Left_Table_Box 实现，右边由 Right_Table_Box 实现
 	*/
 	setWindowTitle("离校人员管理系统");
+	//获取当前日期
+	QDate current_date = QDate::currentDate();
+	currentDate = current_date.toString("yyyy-MM-dd");
 	//在标题显示当前用户名
 	switch (type)
 	{
@@ -42,7 +47,7 @@ AdminWidgets::AdminWidgets()
 
 	QGroupBox* Left_Table_Box = createMess();
 	QGroupBox* Right_Table_Box = createMenu();
-
+	//设置宽度比例
 	HBoxLayout->addWidget(Left_Table_Box, 4);
 	HBoxLayout->addWidget(Right_Table_Box, 2);
 
@@ -52,7 +57,7 @@ AdminWidgets::AdminWidgets()
 为了使表格尺寸自适应整个窗口，将表格添加到了 QHBoxLayout 布局工具中。*/
 QGroupBox* AdminWidgets::createMess()
 {
-	QGroupBox* box = new QGroupBox("人员信息");
+	QGroupBox* box = new QGroupBox("人员信息（黄色代表该人员已到离校日期，红色代表该人员已超离校日期）");
 	TableWidget = new QTableWidget;
 	TableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//按行尾为单位选择
 	if (type == 1)//管理员设置为均可见
@@ -84,7 +89,8 @@ QGroupBox* AdminWidgets::createMess()
 	AutoHBoxLayout->addWidget(TableWidget);
 	box->setLayout(AutoHBoxLayout);
 	//管理员才能更改单元格内容，这样一来更新信息的功能也不需要了
-
+	if(type != 1)
+		TableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 	//当用户点击某个单元格时，更新列表中显示的信息
 	connect(TableWidget, &QTableWidget::cellClicked, this, &AdminWidgets::flushListWidget);
 	//当用户更改某个单元格内的内容时，调用 changeMess() 函数处理 目前只有管理员可以这么做
@@ -92,6 +98,7 @@ QGroupBox* AdminWidgets::createMess()
 		connect(TableWidget, &QTableWidget::cellChanged, this, &AdminWidgets::changeMess);
 	//将用户更改某个单元格内的内容时，同时还要更新表格中显示的信息
 	connect(TableWidget, &QTableWidget::cellChanged, this, &AdminWidgets::flushListWidget);
+
 	return box;
 }
 /* 构建功能面板
@@ -147,7 +154,7 @@ QGroupBox* AdminWidgets::createMenu()
 //当点击添加按钮时，弹出添加信息的子窗口
 void AdminWidgets::AddBox() {
 	messBox = new EditMessBox;
-	//当添加学生信息窗口关闭时，更新表格，同时清空列表中显示的信息
+	//当添加信息窗口关闭时，更新表格，同时清空列表中显示的信息
 	QObject::connect(messBox, &EditMessBox::closeBox, this, &AdminWidgets::flushTable);
 	QObject::connect(messBox, &EditMessBox::closeBox, ListWidget, &QListWidget::clear);
 	messBox->exec();
@@ -206,22 +213,65 @@ void AdminWidgets::flushTable() {
 			TableWidget->setItem(TableWidget->rowCount() - 1, 6, new QTableWidgetItem(qusername));
 		}
 	}
+	
+	//当当前时间超出了人员的离校时间，则标上颜色
+	QString check;
+	if (type != 1)
+	{
+		for (int i = 0; i < TableWidget->rowCount(); i++)
+		{
+			check = TableWidget->model()->index(i, 5).data().toString();
+			if (check == currentDate)
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::yellow);
+			}
+			else if (check < currentDate)
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::red);
+			}
+			else
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::white);
+			}
+		}
+	}
+	else if (type == 1)
+	{
+		for (int i = 0; i < TableWidget->rowCount(); i++)
+		{
+			check = TableWidget->model()->index(i, 9).data().toString();
+			if (check == currentDate)
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::yellow);
+			}
+			else if (check < currentDate)
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::red);
+			}
+			else
+			{
+				TableWidget->item(i, 0)->setBackground(Qt::white);
+			}
+		}
+	}
 	file->close();
-	//完成更新表格的任务后，重新关联与 cellChanged 相关的槽。
+	//完成更新表格的任务后，重新关联与 cellChanged 相关的槽。,并设置为可以排序的状态
 	TableWidget->setSortingEnabled(true);
 	if (type == 1)
 	{
 		connect(TableWidget, &QTableWidget::cellChanged, this, &AdminWidgets::changeMess);
 		connect(TableWidget, &QTableWidget::cellChanged, this, &AdminWidgets::flushListWidget);
 	}
+	
 }
 //更新列表中显示的信息
 void AdminWidgets::flushListWidget(int row) {
-	//当列表中有信息时，直接修改即可
+	
 	if (type == 1)
 	{
 		if (checkList == 1)
 		{
+			//当列表中有信息时，直接修改即可
 			if (ListWidget->count() > 0) {
 				ListWidget->item(0)->setText("身份：" + TableWidget->item(row, 0)->text());
 				ListWidget->item(1)->setText("姓名：" + TableWidget->item(row, 1)->text());
@@ -238,7 +288,7 @@ void AdminWidgets::flushListWidget(int row) {
 				ListWidget->item(12)->setText("用户名：" + TableWidget->item(row, 12)->text());
 				ListWidget->item(13)->setText("密码：" + TableWidget->item(row, 13)->text());
 			}
-			else {
+			else {//否则追加一行信息
 				ListWidget->addItem("身份：" + TableWidget->item(row, 0)->text());
 				ListWidget->addItem("姓名：" + TableWidget->item(row, 1)->text());
 				ListWidget->addItem("学号/身份证号：" + TableWidget->item(row, 2)->text());
@@ -395,14 +445,15 @@ void AdminWidgets::flushListWidget(int row) {
 			}
 		}
 	}
-	//TableWidget->setSortingEnabled(true);
+	
+	
 }
 /* 删除人员信息
  * 思路：将除目标人员外，其它人的信息拷贝到一个临时文件中，然后删除原来的文件，并将临时文件的文件名改为和原文件相同的名称。
 */
 void AdminWidgets::delFun()
 {
-	QList<QTableWidgetItem*>items = TableWidget->selectedItems();
+	QList<QTableWidgetItem*>items = TableWidget->selectedItems();//设置为可以多选
 	//判断用户是否在表格中选中了某个人的信息，只有选中之后，才能执行删除操作
 	if (items.count() > 0) {
 		QMessageBox::StandardButton result = QMessageBox::question(this, "删除", "确定要删除姓名为【" + items.at(1)->text() + "】的人员吗？");
@@ -483,7 +534,7 @@ void AdminWidgets::findMess()
 			if (name == FindEdit->text() || (id == FindEdit->text() && type == 1)) //管理员可以通过姓名和证件号查找人员，其他用户只能通过姓名查找
 			{
 				findSuccess = true;
-				TableWidget->selectRow(i);
+				TableWidget->selectRow(i);//表示高亮这一行
 				flushListWidget(i);
 				break;
 			}
@@ -496,62 +547,14 @@ void AdminWidgets::findMess()
 }
 
 
-/* 更改信息
- * 思路：逐一将信息拷贝到另一个临时文件中，当读取到要更改的信息时，将更改后的信息写入临时文件。最终，临时文件中存储的是更改后所有人的信息。
- * 拷贝完成后，删除原文件，将临时文件的名称改为和原文件一样。
+/* 
+更改信息
 */
 void AdminWidgets::changeMess(int row)
 {
-	QString qclass, qid, qname, qage, qusername, qroom, qbuilding, qpassword, qphone, qstart_time, qstay_reason, qaddress, qfin_time, qcode;
-	QString Name = TableWidget->item(row, 1)->text();
-	QFile* file;
-	QString currentTempFile;
-	QString currentFile;
-	switch (checkList)
-	{
-	case 1:
-		currentFile = studentList;
-		currentTempFile = temp_studentList;
-		break;
-	case 2:
-		currentFile = teacherList;
-		currentTempFile = temp_teacherList;
-		break;
-	case 3:
-		currentFile = visitorList;
-		currentTempFile = temp_visitorList;
-		break;
-	default:
-		break;
-	}
-	//QFile file(studentList);
-	file = new QFile(currentFile);
-	file->open(QIODevice::ReadOnly);
-	QDataStream readDataStr(file);
-
-	//QFile tempFile(temp_studentList);
-	QFile* tempFile = new QFile(currentTempFile);
-	tempFile->open(QIODevice::WriteOnly);
-	QDataStream writeDataStr(tempFile);
-
-	while (!readDataStr.atEnd()) {
-		readDataStr >> qclass >> qname >> qid 
-			>> qage >> qbuilding >> qroom 
-			>> qaddress >> qphone >> qstart_time 
-			>> qfin_time >> qstay_reason >> qcode >> qusername >> qpassword;
-		if (qname != Name) {
-			writeDataStr << qclass << qname << qid << qage << qbuilding << qroom << qaddress << qphone << qstart_time << qfin_time << qstay_reason << qcode << qusername << qpassword;
-		}
-		else {
-			for (int i = 0; i < TableWidget->columnCount(); i++) {
-				writeDataStr << TableWidget->item(row, i)->text();
-			}
-		}
-	}
-	tempFile->close();
-	file->close();
-	file->remove();
-	tempFile->rename(studentList);
+	pp = 0;
+	saveMess();
+	pp = 1;
 	//更新数组中的数据
 	if (checkList == 1)
 	{
@@ -565,6 +568,7 @@ void AdminWidgets::changeMess(int row)
 	{
 		VisitorUser[0].read();
 	}
+	int bb;
 }
 
 //保存信息，将表格中的信息重新存储到文件中
@@ -586,7 +590,8 @@ void AdminWidgets::saveMess()
 		}
 	}
 	file->close();
-	QMessageBox::information(this, "保存", "保存成功！");
+	if(pp)
+		QMessageBox::information(this, "保存", "保存成功！");
 }
 
 

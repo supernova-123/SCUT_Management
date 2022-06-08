@@ -3,7 +3,7 @@
 //extern ADMIN_User AdminUser[SIZE];
 extern vector<ADMIN_User>AdminUser;
 extern int Pos;
-
+extern int adscount;
 AddAdmin::AddAdmin(QWidget *parent)
 	: QWidget(parent)
 {
@@ -21,6 +21,11 @@ AddAdmin::~AddAdmin()
 
 void AddAdmin::on_yesBtn_clicked()
 {
+	if (adscount >= SIZE)
+	{
+		QMessageBox::warning(this, tr("提示"), tr("管理员人数已满！"), QMessageBox::Yes);
+		return;
+	}
 	//读取用户名和密码
 	QString username = ui.usernameEdit->text();
 	QString password = ui.passwordEdit->text();
@@ -29,13 +34,11 @@ void AddAdmin::on_yesBtn_clicked()
 		QMessageBox::warning(this, tr("提示"), tr("请将用户名和密码填写完整"), QMessageBox::Yes);
 		return;
 	}
-	for (int i = 0;!AdminUser[i].getUsername().isEmpty(); ++i)
+	bool check = AdminUser[Pos].UserIsExisted(username);
+	if (check)
 	{
-		if (AdminUser[i].getUsername() == username)//用户名重复
-		{
-			QMessageBox::warning(this, tr("提示"), tr("用户已存在，请更换用户名"), QMessageBox::Yes);
-			return;
-		}
+		QMessageBox::warning(this, tr("提示"), tr("用户已存在，请更换用户名"), QMessageBox::Yes);
+		return;
 	}
 	//加入文件中
 	ADMIN_User ad;
@@ -44,6 +47,7 @@ void AddAdmin::on_yesBtn_clicked()
 	AdminUser.push_back(ad);//加入新管理员
 	ad.save();//保存到文件中（往后追加），此处使用C++原始读取操作
 	QMessageBox::information(this, tr("提示"), tr("添加成功！"), QMessageBox::Yes);
+	ad.read();//重新排序
 	close();
 }
 //删除管理员
