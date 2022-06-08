@@ -157,6 +157,7 @@ public:
         Welcome = new QLabel(frame);
         Welcome->setObjectName(QString::fromUtf8("Welcome"));
         Welcome->setStyleSheet(QString::fromUtf8("font: 11pt \"\351\273\221\344\275\223\";"));
+        Welcome->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         gridLayout_2->addWidget(Welcome, 0, 0, 1, 3);
 

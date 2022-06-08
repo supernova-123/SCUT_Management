@@ -59,6 +59,7 @@ public:
 
         passwordEdit = new QLineEdit(AddAdmin);
         passwordEdit->setObjectName(QString::fromUtf8("passwordEdit"));
+        passwordEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
 
         verticalLayout->addWidget(passwordEdit);
 

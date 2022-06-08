@@ -106,7 +106,7 @@ public:
 
         Data = new QLabel(centralWidget);
         Data->setObjectName(QString::fromUtf8("Data"));
-        Data->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        Data->setAlignment(Qt::AlignHCenter|Qt::AlignTop);
 
         verticalLayout->addWidget(Data);
 
@@ -137,10 +137,10 @@ public:
         student->setText(QCoreApplication::translate("mainUIClass", "\346\237\245\347\234\213\345\255\246\347\224\237\345\220\215\345\215\225", nullptr));
         teacher->setText(QCoreApplication::translate("mainUIClass", "\346\237\245\347\234\213\346\225\231\350\201\214\345\267\245\345\220\215\345\215\225", nullptr));
         visitor->setText(QCoreApplication::translate("mainUIClass", "\346\237\245\347\234\213\350\256\277\345\256\242\345\220\215\345\215\225", nullptr));
-        addAdmin->setText(QCoreApplication::translate("mainUIClass", "\346\267\273\345\212\240/\345\210\240\351\231\244\347\256\241\347\220\206\345\221\230", nullptr));
+        addAdmin->setText(QCoreApplication::translate("mainUIClass", "\346\237\245\347\234\213\347\256\241\347\220\206\345\221\230\345\220\215\345\215\225", nullptr));
         logout->setText(QCoreApplication::translate("mainUIClass", "\351\200\200\345\207\272", nullptr));
         label->setText(QCoreApplication::translate("mainUIClass", "\344\273\212\346\227\245\345\271\277\344\270\234\347\226\253\346\203\205", nullptr));
-        Data->setText(QCoreApplication::translate("mainUIClass", "123", nullptr));
+        Data->setText(QCoreApplication::translate("mainUIClass", "NULL", nullptr));
     } // retranslateUi
 
 };
