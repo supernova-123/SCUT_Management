@@ -9,9 +9,11 @@ AddAdmin::AddAdmin(QWidget *parent)
 {
 	ui.setupUi(this);
 	setWindowTitle("添加/删除管理员");
-	ui.usernameEdit->setPlaceholderText("请输入用户名...");
+	ui.usernameEdit->setMaxLength(35);
+	ui.passwordEdit->setMaxLength(35);
+	ui.usernameEdit->setPlaceholderText("请输入用户名...(不超过35个字符)");
 	ui.usernameEdit->setClearButtonEnabled(true);
-	ui.passwordEdit->setPlaceholderText("请输入密码...");
+	ui.passwordEdit->setPlaceholderText("请输入密码...(不超过35个字符)");
 	ui.passwordEdit->setClearButtonEnabled(true);
 }
 
@@ -47,7 +49,9 @@ void AddAdmin::on_yesBtn_clicked()
 	AdminUser.push_back(ad);//加入新管理员
 	ad.save();//保存到文件中（往后追加），此处使用C++原始读取操作
 	QMessageBox::information(this, tr("提示"), tr("添加成功！"), QMessageBox::Yes);
-	ad.read();//重新排序
+	int ss = ad.read()-2;//重新排序
+	int len = AdminUser[ss].getUsername().length();
+	buildHash(len, AdminUser[ss].hash, AdminUser[ss].getUsername());
 	close();
 }
 //删除管理员
